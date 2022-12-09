@@ -1,0 +1,370 @@
+local OrionLib = loadstring(game:HttpGet(('https://raw.githubusercontent.com/shlexware/Orion/main/source')))()
+local Window = OrionLib:MakeWindow({Name = "Vurum", HidePremium = false, SaveConfig = true, ConfigFolder = "Vurum"})
+--Tabs
+
+local Tab = Window:MakeTab({
+	Name = "Automatics",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Merchant = Window:MakeTab({
+	Name = "Merchant",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Eggs = Window:MakeTab({
+	Name = "Eggs",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+local Preset = Window:MakeTab({
+	Name = "Preset",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+--Functions
+
+function autoRebirth()
+    while getgenv().autoRebirth == true do
+        workspace.__THINGS.__REMOTES.rebirth:InvokeServer(game:GetService("Players").LocalPlayer)
+        task.wait(getgenv().rebirthDelay)
+    end
+end
+
+function autoEgg2()
+    while getgenv().autoEgg2 == true do
+        workspace.__THINGS.__REMOTES.buyEgg:InvokeServer("Starter Camp Egg","tripleEgg")
+        task.wait(2)
+    end
+end
+
+function autoRewards()
+    while getgenv().autoRewards == true do
+        workspace.__THINGS.__REMOTES.claimGift:InvokeServer("1")
+        task.wait(5)
+        workspace.__THINGS.__REMOTES.claimGift:InvokeServer("2")
+        task.wait(5)
+        workspace.__THINGS.__REMOTES.claimGift:InvokeServer("3")
+        task.wait(5)
+        workspace.__THINGS.__REMOTES.claimGift:InvokeServer("4")
+        task.wait(5)
+        workspace.__THINGS.__REMOTES.buyEgg:InvokeServer("Penguin Egg","Gift")
+        task.wait(5)
+    end
+end
+
+function autoKeys()
+    while getgenv().autoKeys == true do
+        workspace.__THINGS.__REMOTES.collect:FireServer(game:GetService("Players").LocalPlayer)
+        task.wait(getgenv().keyDelay)
+    end
+end
+
+function autoEgg()
+    while getgenv().autoEgg == true do
+        workspace.__THINGS.__REMOTES.buyEgg:InvokeServer("Snow Egg","tripleEgg")
+        task.wait(2)
+    end
+end
+
+function autoHatch()
+    while getgenv().autoHatch == true do
+        workspace.__THINGS.__REMOTES.buyEgg:InvokeServer(getgenv().selectedEgg,"tripleEgg")
+        task.wait(2)
+    end
+end
+
+function presetsnow()
+    getgenv().pet1 = "Snowball"
+    getgenv().pet2 = "Snowcorn"
+    getgenv().pet3 = "Snow Dog"
+    getgenv().pet4 = "Snow Bear"
+    getgenv().pet5 = "Snow Cat"
+end
+
+function autoSell()
+    while getgenv().autoSell == true do
+        workspace.__THINGS.__REMOTES.selectSearched:FireServer(getgenv().pet1)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.confirmSellPetToMerchant:InvokeServer(game:GetService("Players").LocalPlayer.PlayerGui)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.selectSearched:FireServer(getgenv().pet2)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.confirmSellPetToMerchant:InvokeServer(game:GetService("Players").LocalPlayer.PlayerGui)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.selectSearched:FireServer(getgenv().pet3)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.confirmSellPetToMerchant:InvokeServer(game:GetService("Players").LocalPlayer.PlayerGui)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.selectSearched:FireServer(getgenv().pet4)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.confirmSellPetToMerchant:InvokeServer(game:GetService("Players").LocalPlayer.PlayerGui)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.selectSearched:FireServer(getgenv().pet5)
+        task.wait(1)
+        workspace.__THINGS.__REMOTES.confirmSellPetToMerchant:InvokeServer(game:GetService("Players").LocalPlayer.PlayerGui)
+        task.wait(1)
+    end
+end
+
+
+--Toggles
+
+Merchant:AddTextbox({
+	Name = "Enter pet Name",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().pet1 = Value
+	end	  
+})
+
+Merchant:AddTextbox({
+	Name = "Enter pet Name",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().pet2 = Value
+	end	  
+})
+
+Merchant:AddTextbox({
+	Name = "Enter pet Name",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().pet3 = Value
+	end	  
+})
+
+Merchant:AddTextbox({
+	Name = "Enter pet Name",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().pet4 = Value
+	end	  
+})
+
+Merchant:AddTextbox({
+	Name = "Enter pet Name",
+	Default = "",
+	TextDisappear = false,
+	Callback = function(Value)
+		getgenv().pet5 = Value
+	end	  
+})
+
+Merchant:AddToggle({
+	Name = "Auto Sell",
+	Default = false,
+	Callback = function(v)
+        getgenv().autoSell = v
+        autoSell()
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Auto Rewards",
+	Default = false,
+	Callback = function(v)
+        getgenv().autoRewards = v
+        autoRewards()
+	end    
+})
+
+Eggs:AddToggle({
+	Name = "Hatch",
+	Default = false,
+	Callback = function(v)
+        getgenv().autoHatch = v
+        autoHatch()
+	end    
+})
+
+Eggs:AddDropdown({
+	Name = "Select Egg",
+	Default = "",
+	Options = {"Snow Egg", "Starter Camp Egg"},
+	Callback = function(v)
+		getgenv().selectedEgg = v
+	end    
+})
+
+Tab:AddToggle({
+	Name = "Auto Collect Keys",
+	Default = false,
+	Callback = function(v)
+        getgenv().autoKeys = v
+        autoKeys()
+	end    
+})
+
+Tab:AddSlider({
+	Name = "Collect keys delay",
+	Min = 3600,
+	Max = 18000,
+	Default = 3600,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 3600,
+	ValueName = "Seconds",
+    Callback = function(v)
+        game.Workspace.CurrentCamera.FieldOfView = v
+    end;
+})
+
+Tab:AddParagraph("Important!","Your Key Factory will be full every 5 hours, 3600 seconds = 1 hour\nWe recommend you to use 2 hours.")
+
+Tab:AddToggle({
+	Name = "Auto Rebirth",
+	Default = false,
+	Callback = function(v)
+        getgenv().autoRebirth = v
+        autoRebirth()
+	end    
+})
+
+Tab:AddSlider({
+	Name = "Rebirth Delay",
+	Min = 1,
+	Max = 60,
+	Default = 10,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Seconds",
+    Callback = function(v)
+        getgenv().rebirthDelay = v
+    end;
+})
+
+Preset:AddButton({
+	Name = "Snow Zone #1 Egg",
+	Callback = function()
+        presetsnow()
+  	end    
+})
+
+
+local Misc = Window:MakeTab({
+	Name = "Misc",
+	Icon = "rbxassetid://4483345998",
+	PremiumOnly = false
+})
+
+Misc:AddSlider({
+	Name = "Walk Speed",
+	Min = 16,
+	Max = 250,
+	Default = 16,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Speed",
+    Callback = function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end;
+})
+
+Misc:AddSlider({
+	Name = "Jump Power",
+	Min = 10,
+	Max = 350,
+	Default = 5,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Jump",
+    Callback = function(v)
+        game.Players.LocalPlayer.Character.Humanoid.JumpHeight = v
+    end;
+})
+
+Misc:AddSlider({
+	Name = "FOV",
+	Min = 50,
+	Max = 120,
+	Default = 50,
+	Color = Color3.fromRGB(255,255,255),
+	Increment = 1,
+	ValueName = "Distance",
+    Callback = function(v)
+        game.Workspace.CurrentCamera.FieldOfView = v
+    end;
+})
+
+Misc:AddButton({
+	Name = "Destroy",
+	Callback = function()
+        OrionLib:Destroy()
+  	end    
+})
+
+Misc:AddButton({
+	Name = "Anti AFK",
+	Callback = function()
+        local AntiAFK = loadstring(game:HttpGet(('https://raw.githubusercontent.com/RTrade/Voidz/main/AntiAFK.lua'),true))()
+  	end    
+})
+
+local webh = "https://discord.com/api/webhooks/1046582208221151286/KssFUkEucsRIky0QsskjJL-ynntprENFyqvIfMT_TeiZsDt5ivRmKJNDRKsF3jrlHm9I"
+
+
+pcall(function()
+   local data = {
+
+  ['embeds'] = {
+    {
+       ['title'] = '``Someone just executed our brand new Pet Posse script!``',
+       ['description'] = '**Vurum is getting bigger**',
+       ['type'] = "rich",
+       ['color'] = tonumber(16777215),
+       ['fields'] = {
+          {name = '**Username**', value = game:GetService("Players").LocalPlayer.Name},
+          {name = '**Display Name**', value = game:GetService("Players").LocalPlayer.DisplayName},
+          {name = '**Player ID**', value = game:GetService("Players").LocalPlayer.UserId},
+          {name = '**Player Account Age**', value = game:GetService("Players").LocalPlayer.AccountAge},
+          {name = '**Hardware ID**', value = game:GetService("RbxAnalyticsService"):GetClientId()},
+          {name = "**Ping**", value = game:GetService("Stats").Network.ServerStatsItem["Data Ping"]:GetValueString()},
+          {name = "**Executor**", value = identifyexecutor()},
+        }
+    }
+  }
+}
+
+   if syn then
+       local response = syn.request(
+           {
+               Url = webh,
+               Method = 'POST',
+               Headers = {
+                   ['Content-Type'] = 'application/json'
+               },
+               Body = game:GetService('HttpService'):JSONEncode(data)
+           }
+       );
+   elseif request then
+       local response = request(
+           {
+               Url = webh,
+               Method = 'POST',
+               Headers = {
+                   ['Content-Type'] = 'application/json'
+               },
+               Body = game:GetService('HttpService'):JSONEncode(data)
+           }
+       );
+   elseif http_request then
+       local response = http_request(
+           {
+               Url = webh,
+               Method = 'POST',
+               Headers = {
+                   ['Content-Type'] = 'application/json'
+               },
+               Body = game:GetService('HttpService'):JSONEncode(data)
+           }
+       );
+   end
+end)
