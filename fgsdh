@@ -213,7 +213,7 @@ Tab:AddSlider({
 	Increment = 3600,
 	ValueName = "Seconds",
     Callback = function(v)
-        game.Workspace.CurrentCamera.FieldOfView = v
+        getgenv().keyDelay = v
     end;
 })
 
