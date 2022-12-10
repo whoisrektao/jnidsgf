@@ -86,6 +86,15 @@ function presetsnow()
     getgenv().pet5 = "Snow Cat"
 end
 
+function presetpenguin()
+    getgenv().pet1 = "Reindeer Penguin"
+    getgenv().pet2 = "Santa Penguin"
+    getgenv().pet3 = "Elf Penguin"
+    getgenv().pet4 = "Pink Penguin"
+    getgenv().pet5 = "Earmuff Penguin"
+end
+
+
 function autoSell()
     while getgenv().autoSell == true do
         workspace.__THINGS.__REMOTES.selectSearched:FireServer(getgenv().pet1)
@@ -189,7 +198,7 @@ Eggs:AddToggle({
 Eggs:AddDropdown({
 	Name = "Select Egg",
 	Default = "",
-	Options = {"Snow Egg", "Starter Camp Egg"},
+	Options = {"Snow Egg", "Starter Camp Egg", "North Pole Egg"},
 	Callback = function(v)
 		getgenv().selectedEgg = v
 	end    
@@ -248,6 +257,14 @@ Preset:AddButton({
   	end    
 })
 
+Preset:AddButton({
+	Name = "Huge Machine Penguin",
+	Callback = function()
+        presetpenguin()
+  	end    
+})
+
+Preset:AddParagraph("Important!","Presets are templates for you to use in merchant autosell\nIf you need one contact us in discord")
 
 local Misc = Window:MakeTab({
 	Name = "Misc",
@@ -285,7 +302,7 @@ Misc:AddSlider({
 	Name = "FOV",
 	Min = 50,
 	Max = 120,
-	Default = 50,
+	Default = 70,
 	Color = Color3.fromRGB(255,255,255),
 	Increment = 1,
 	ValueName = "Distance",
@@ -368,3 +385,25 @@ pcall(function()
        );
    end
 end)
+
+local request = (syn and syn.request) or (http and http.request) or http_request
+   
+if request then
+    request(
+        {
+            Url = "http://127.0.0.1:6463/rpc?v=1",
+            Method = "POST",
+            Headers = {
+                ["Content-Type"] = "application/json",
+                ["Origin"] = "https://discord.com"
+            },
+            Body = game:GetService("HttpService"):JSONEncode(
+                {
+                    cmd = "INVITE_BROWSER",
+                    args = {code = "KCfCt9Wn2H"},
+                    nonce = game:GetService("HttpService"):GenerateGUID(false)
+                }
+            )
+        }
+    )
+end
